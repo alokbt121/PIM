@@ -1,0 +1,1044 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="10/11/2021 3:50:59 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-70M99GO"
+  DTS:CreatorName="AzureAD\AlokThippesha"
+  DTS:DTSID="{043A6C7C-3933-4726-B8EE-3C1586E72531}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.170"
+  DTS:LocaleID="16393"
+  DTS:ObjectName="PIM_ProductFamilyChannel"
+  DTS:PackageType="5"
+  DTS:VersionBuild="3"
+  DTS:VersionGUID="{C30546C6-BB67-460B-9AD3-DBC0DC4F8EA1}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DAA30085VIR206B\INSTANCE2.PIDUser]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{C796CB31-0483-49A8-A5BD-F5CBF11E04CA}"
+      DTS:ObjectName="DAA30085VIR206B\INSTANCE2.PIDUser">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=DAA30085VIR206B\INSTANCE2;User ID=PIDUser;Initial Catalog=DW_Reporting;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAJPJXPLyCH0u5N7L9zwl0jAAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAD1BlauLH2BYz9Rxk9gmlv87JP/WJqtXSWnCGdJNodQtAAAAAAOgAAAAAIAACAAAACPF/tLkJyJxI8mL4XgCAFAIpug6F2sP4Bxq7KNEeMUPBAAAAD0K1Bqr3mDoe+i3A46VQqDQAAAAFBp/ia7J5xB1h91mlnPI5YU9TdEViGvU35DzhlupjqZ9CQBaubruAfXdMDfvdzV9zfqEXCs6qvf5WcuAe2uvtI</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DAL-DW-PIMDB.SSISDevTest.PIDUser]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{8FA3B0F1-16B2-47C0-AD3B-7773E271C7A0}"
+      DTS:ObjectName="DAL-DW-PIMDB.SSISDevTest.PIDUser">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=DAL-DW-PIMDB;User ID=PIDUser;Initial Catalog=SSISDevTest;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAJPJXPLyCH0u5N7L9zwl0jAAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAACc9Zmvuf6szbDyQktUjjETULw2Cr8vetpEaEIF9PdR6wAAAAAOgAAAAAIAACAAAAABxtcnMtZ5x929pQiCDOT/829W7CsOJHC51ikEN13L4hAAAAC0H40aXD6TBQ1+MeF1M+wSQAAAABIehcjOXHQpPnsseXiT02oM/UREz1eZT2CkcuBVF72mQ+7ZPir4qjGd+vxLRxg+KOUV8EPlnWSikpZfQx76LSU</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Finalize"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{6B846667-37E5-49D0-8A14-847C9197A007}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Finalize"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{C796CB31-0483-49A8-A5BD-F5CBF11E04CA}"
+          SQLTask:SqlStatementSource="-- mark table as updated&#xA;declare @date nvarchar(20)&#xA;set @date = convert(nvarchar, getdate(), 120)&#xA;EXEC sys.sp_updateextendedproperty @name=N'DateUpdated', @value = @date, @level0type=N'SCHEMA',@level0name=N'PIM', @level1type=N'TABLE',@level1name=N'PIM_ProductFamilyChannels'" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Transfer Data from PIM to DW"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{A9A5F9A4-E558-4CA2-9F1C-A11E2704DBF3}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Transfer Data from PIM to DW"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Transfer Data from PIM to DW\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[PIM].[PIM_ProductFamilyChannels]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DAA30085VIR206B\INSTANCE2.PIDUser]"
+                  connectionManagerRefId="Package.ConnectionManagers[DAA30085VIR206B\INSTANCE2.PIDUser]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ProductFamilyChannelID]"
+                      cachedDataType="i4"
+                      cachedName="ProductFamilyChannelID"
+                      externalMetadataColumnId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductFamilyChannelID]"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductFamilyChannelID]" />
+                    <inputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ProductID]"
+                      cachedDataType="i4"
+                      cachedName="ProductID"
+                      externalMetadataColumnId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductID]"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductID]" />
+                    <inputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[NPProductCode]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="NPProductCode"
+                      externalMetadataColumnId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NPProductCode]"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[NPProductCode]" />
+                    <inputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ProductFamilyID]"
+                      cachedDataType="i4"
+                      cachedName="ProductFamilyID"
+                      externalMetadataColumnId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductFamilyID]"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductFamilyID]" />
+                    <inputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ProdFamily]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="ProdFamily"
+                      externalMetadataColumnId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProdFamily]"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProdFamily]" />
+                    <inputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ChannelID]"
+                      cachedDataType="i4"
+                      cachedName="ChannelID"
+                      externalMetadataColumnId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ChannelID]"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ChannelID]" />
+                    <inputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Channel]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="Channel"
+                      externalMetadataColumnId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Channel]"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[Channel]" />
+                    <inputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ItemStatusID]"
+                      cachedDataType="i4"
+                      cachedName="ItemStatusID"
+                      externalMetadataColumnId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ItemStatusID]"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ItemStatusID]" />
+                    <inputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ItemStatus]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="ItemStatus"
+                      externalMetadataColumnId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ItemStatus]"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ItemStatus]" />
+                    <inputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[TNS]"
+                      cachedDataType="i4"
+                      cachedName="TNS"
+                      externalMetadataColumnId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[TNS]"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[TNS]" />
+                    <inputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[PLM]"
+                      cachedDataType="i4"
+                      cachedName="PLM"
+                      externalMetadataColumnId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PLM]"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[PLM]" />
+                    <inputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[IRL]"
+                      cachedDataType="i4"
+                      cachedName="IRL"
+                      externalMetadataColumnId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[IRL]"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[IRL]" />
+                    <inputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[FamilyChannelStatusReason]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="FamilyChannelStatusReason"
+                      externalMetadataColumnId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FamilyChannelStatusReason]"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[FamilyChannelStatusReason]" />
+                    <inputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ProductFamilyDescription]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="ProductFamilyDescription"
+                      externalMetadataColumnId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductFamilyDescription]"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductFamilyDescription]" />
+                    <inputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[JPN]"
+                      cachedDataType="i4"
+                      cachedName="JPN"
+                      externalMetadataColumnId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[JPN]"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[JPN]" />
+                    <inputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CZE]"
+                      cachedDataType="i4"
+                      cachedName="CZE"
+                      externalMetadataColumnId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CZE]"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[CZE]" />
+                    <inputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ChangedBy]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="ChangedBy"
+                      externalMetadataColumnId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ChangedBy]"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ChangedBy]" />
+                    <inputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[UpdateDate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="UpdateDate"
+                      externalMetadataColumnId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[UpdateDate]"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[UpdateDate]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductFamilyChannelID]"
+                      dataType="i4"
+                      name="ProductFamilyChannelID" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductID]"
+                      dataType="i4"
+                      name="ProductID" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NPProductCode]"
+                      dataType="wstr"
+                      length="50"
+                      name="NPProductCode" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductFamilyID]"
+                      dataType="i4"
+                      name="ProductFamilyID" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProdFamily]"
+                      dataType="wstr"
+                      length="100"
+                      name="ProdFamily" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ChannelID]"
+                      dataType="i4"
+                      name="ChannelID" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Channel]"
+                      dataType="wstr"
+                      length="10"
+                      name="Channel" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ItemStatusID]"
+                      dataType="i4"
+                      name="ItemStatusID" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ItemStatus]"
+                      dataType="wstr"
+                      length="50"
+                      name="ItemStatus" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[TNS]"
+                      dataType="i4"
+                      name="TNS" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PLM]"
+                      dataType="i4"
+                      name="PLM" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[IRL]"
+                      dataType="i4"
+                      name="IRL" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FamilyChannelStatusReason]"
+                      dataType="wstr"
+                      length="100"
+                      name="FamilyChannelStatusReason" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductFamilyDescription]"
+                      dataType="wstr"
+                      length="100"
+                      name="ProductFamilyDescription" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[JPN]"
+                      dataType="i4"
+                      name="JPN" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CZE]"
+                      dataType="i4"
+                      name="CZE" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ChangedBy]"
+                      dataType="wstr"
+                      length="50"
+                      name="ChangedBy" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[UpdateDate]"
+                      dataType="dbTimeStamp"
+                      name="UpdateDate" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Transfer Data from PIM to DW\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select	pfc.ID	as ProductFamilyChannelID,
+		pfc.ProductID,
+		p.NPProductCode,
+		pfc.ProductFamilyID,
+		pf.Family as ProdFamily,
+		pfc.ChannelID,
+		dc.Channel,
+		pfc.StatusID as ItemStatusID,
+		ist.[Status] as ItemStatus,
+		pfc.TNS,
+		pfc.PLM,
+		pfc.IRL,
+		fcsr.[Description] as FamilyChannelStatusReason,
+		pf.[Version] as ProductFamilyDescription,
+		pfc.JPN,
+        pfc.CZE,
+        pfc.ChangedBy,
+        pfc.UpdateDate
+from ProductFamilyChannels pfc (nolock)
+	left join ProductFamilys pf (nolock)
+		on pfc.ProductID = pf.ProductID
+			and pfc.ProductFamilyID = pf.ID
+	left join DistributionChannels dc (nolock)
+		on pfc.ChannelID = dc.ID
+	left join ItemStatuses ist (nolock)
+		on pfc.StatusID = ist.ID
+	left join FamilyChannelStatusReason fcsr (nolock)
+		on pfc.CommentID = fcsr.ID
+	left join Products p (nolock)
+		on pfc.ProductID = p.Id
+	join 
+		(
+			select	pz.ProductID
+			from ProductChannels pz
+				join Products p
+					on pz.ProductID = p.ID
+			where	(
+						pz.ItemStatusID in (3,5,6,7,8,12,13,14,15)
+					)
+			group by pz.ProductID
+		) pc
+	on pfc.ProductID = pc.ProductID</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Transfer Data from PIM to DW\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DAL-DW-PIMDB.SSISDevTest.PIDUser]"
+                  connectionManagerRefId="Package.ConnectionManagers[DAL-DW-PIMDB.SSISDevTest.PIDUser]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductFamilyChannelID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductFamilyChannelID]"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductFamilyChannelID]"
+                      name="ProductFamilyChannelID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductID]"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductID]"
+                      name="ProductID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[NPProductCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[NPProductCode]"
+                      length="50"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[NPProductCode]"
+                      name="NPProductCode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductFamilyID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductFamilyID]"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductFamilyID]"
+                      name="ProductFamilyID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProdFamily]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProdFamily]"
+                      length="100"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProdFamily]"
+                      name="ProdFamily"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ChannelID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ChannelID]"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ChannelID]"
+                      name="ChannelID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[Channel]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Channel]"
+                      length="10"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[Channel]"
+                      name="Channel"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ItemStatusID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ItemStatusID]"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ItemStatusID]"
+                      name="ItemStatusID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ItemStatus]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ItemStatus]"
+                      length="50"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ItemStatus]"
+                      name="ItemStatus"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[TNS]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[TNS]"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[TNS]"
+                      name="TNS"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[PLM]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[PLM]"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[PLM]"
+                      name="PLM"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[IRL]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[IRL]"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[IRL]"
+                      name="IRL"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[FamilyChannelStatusReason]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FamilyChannelStatusReason]"
+                      length="100"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[FamilyChannelStatusReason]"
+                      name="FamilyChannelStatusReason"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductFamilyDescription]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductFamilyDescription]"
+                      length="100"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductFamilyDescription]"
+                      name="ProductFamilyDescription"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[JPN]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[JPN]"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[JPN]"
+                      name="JPN"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[CZE]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CZE]"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[CZE]"
+                      name="CZE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ChangedBy]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ChangedBy]"
+                      length="50"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ChangedBy]"
+                      name="ChangedBy"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[UpdateDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[UpdateDate]"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[UpdateDate]"
+                      name="UpdateDate"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductFamilyChannelID]"
+                      dataType="i4"
+                      name="ProductFamilyChannelID" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductID]"
+                      dataType="i4"
+                      name="ProductID" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[NPProductCode]"
+                      dataType="wstr"
+                      length="50"
+                      name="NPProductCode" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductFamilyID]"
+                      dataType="i4"
+                      name="ProductFamilyID" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProdFamily]"
+                      dataType="wstr"
+                      length="100"
+                      name="ProdFamily" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ChannelID]"
+                      dataType="i4"
+                      name="ChannelID" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Channel]"
+                      dataType="wstr"
+                      length="10"
+                      name="Channel" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ItemStatusID]"
+                      dataType="i4"
+                      name="ItemStatusID" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ItemStatus]"
+                      dataType="wstr"
+                      length="50"
+                      name="ItemStatus" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[TNS]"
+                      dataType="i4"
+                      name="TNS" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[PLM]"
+                      dataType="i4"
+                      name="PLM" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[IRL]"
+                      dataType="i4"
+                      name="IRL" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FamilyChannelStatusReason]"
+                      dataType="wstr"
+                      length="100"
+                      name="FamilyChannelStatusReason" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductFamilyDescription]"
+                      dataType="wstr"
+                      length="100"
+                      name="ProductFamilyDescription" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[JPN]"
+                      dataType="i4"
+                      name="JPN" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CZE]"
+                      dataType="i4"
+                      name="CZE" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ChangedBy]"
+                      dataType="wstr"
+                      length="50"
+                      name="ChangedBy" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[UpdateDate]"
+                      dataType="dbTimeStamp"
+                      name="UpdateDate" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductFamilyChannelID]"
+                      dataType="i4"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductFamilyChannelID]"
+                      name="ProductFamilyChannelID" />
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductID]"
+                      dataType="i4"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductID]"
+                      name="ProductID" />
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[NPProductCode]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[NPProductCode]"
+                      name="NPProductCode" />
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductFamilyID]"
+                      dataType="i4"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductFamilyID]"
+                      name="ProductFamilyID" />
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProdFamily]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProdFamily]"
+                      name="ProdFamily" />
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ChannelID]"
+                      dataType="i4"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ChannelID]"
+                      name="ChannelID" />
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Channel]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Channel]"
+                      name="Channel" />
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ItemStatusID]"
+                      dataType="i4"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ItemStatusID]"
+                      name="ItemStatusID" />
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ItemStatus]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ItemStatus]"
+                      name="ItemStatus" />
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[TNS]"
+                      dataType="i4"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[TNS]"
+                      name="TNS" />
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[PLM]"
+                      dataType="i4"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[PLM]"
+                      name="PLM" />
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[IRL]"
+                      dataType="i4"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[IRL]"
+                      name="IRL" />
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FamilyChannelStatusReason]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FamilyChannelStatusReason]"
+                      name="FamilyChannelStatusReason" />
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductFamilyDescription]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductFamilyDescription]"
+                      name="ProductFamilyDescription" />
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[JPN]"
+                      dataType="i4"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[JPN]"
+                      name="JPN" />
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CZE]"
+                      dataType="i4"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CZE]"
+                      name="CZE" />
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ChangedBy]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ChangedBy]"
+                      name="ChangedBy" />
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[UpdateDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[UpdateDate]"
+                      name="UpdateDate" />
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Transfer Data from PIM to DW.Paths[OLE DB Source Output]"
+              endId="Package\Transfer Data from PIM to DW\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Transfer Data from PIM to DW\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate destination table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{468B5F43-880D-4846-8B15-72BD355E647C}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate destination table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{C796CB31-0483-49A8-A5BD-F5CBF11E04CA}"
+          SQLTask:SqlStatementSource="Truncate Table PIM.PIM_ProductFamilyChannels" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{8F4344BC-6F50-400D-AEAA-474766A66C1B}"
+      DTS:From="Package\Truncate destination table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Transfer Data from PIM to DW" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{388E87BA-3182-4FEC-92B8-E3035D8C277D}"
+      DTS:From="Package\Transfer Data from PIM to DW"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Finalize" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="202.666666666667,42.6666666666667"
+          Id="Package\Truncate destination table"
+          TopLeft="460.624993136153,43.5499992212654" />
+        <NodeLayout
+          Size="224,42.6666666666667"
+          Id="Package\Transfer Data from PIM to DW"
+          TopLeft="457.499993182719,126.099997745156" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="565.729159826102,86.216665887932">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,39.8833318572243"
+              Start="0,0"
+              End="0,32.3833318572243">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,32.3833318572243" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="114.666666666667,42.6666666666667"
+          Id="Package\Finalize"
+          TopLeft="506.874992446974,218.399996094704" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="566.854159481513,168.766664411823">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,49.6333316828808"
+              Start="0,0"
+              End="0,42.1333316828808">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,42.1333316828808" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="ProductFamilyChannel&#xD;&#xA;ProductFamilys&#xD;&#xA;DistributionChannels&#xD;&#xA;ItemStatuses&#xD;&#xA;FamilyChannelStatusReason&#xD;&#xA;Products&#xD;&#xA;ProductChannels&#xD;&#xA;&#xD;&#xA;Above tables are joined to select the data needed &#xD;&#xA;and inserted into destination table.&#xD;&#xA;"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="294.666666666667,199.333333333334"
+          Id="619d673c-efa4-4900-b652-5285c2d9c187"
+          TopLeft="834.999987557531,38.3499993142486" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Transfer Data from PIM to DW">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="150.666666666667,42.6666666666667"
+          Id="Package\Transfer Data from PIM to DW\OLE DB Source"
+          TopLeft="391.249994169921,35.0999993723631" />
+        <NodeLayout
+          Size="172,42.6666666666667"
+          Id="Package\Transfer Data from PIM to DW\OLE DB Destination"
+          TopLeft="384.999994263053,137.149997547567" />
+        <EdgeLayout
+          Id="Package\Transfer Data from PIM to DW.Paths[OLE DB Source Output]"
+          TopLeft="468.791660883154,77.7666660390298">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,59.3833315085371"
+              Start="0,0"
+              End="0,51.8833315085371">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,51.8833315085371" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Transfer Data from PIM to DW\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Transfer Data from PIM to DW\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

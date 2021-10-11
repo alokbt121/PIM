@@ -1,0 +1,848 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="10/11/2021 4:19:16 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-70M99GO"
+  DTS:CreatorName="AzureAD\AlokThippesha"
+  DTS:DTSID="{21BADE79-68B3-454A-BD67-11E35FEF58A2}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.170"
+  DTS:LocaleID="16393"
+  DTS:ObjectName="PIM_ProductMerchCatKeys"
+  DTS:PackageType="5"
+  DTS:VersionBuild="1"
+  DTS:VersionGUID="{AC4600A5-7B2C-4BDE-9112-516F45069C40}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DAA30085VIR206B\INSTANCE2.PIDUser]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{D00D86DD-9E41-494E-B3AC-BCD06D5CD675}"
+      DTS:ObjectName="DAA30085VIR206B\INSTANCE2.PIDUser">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=DAA30085VIR206B\INSTANCE2;User ID=PIDUser;Initial Catalog=DW_Reporting;Provider=SQLNCLI11.1;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAJPJXPLyCH0u5N7L9zwl0jAAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAABiTb6Qy5rXtoPWbf1CGuskdOGuV24jvV7YT66zJa2WXgAAAAAOgAAAAAIAACAAAAC7gkIVgIknOVExzCX5uwOKDA0rYpj+rd0wDHj/wY5FOxAAAAC6GFxQ8qS3gKH6BTY0gMg7QAAAAGXTcRjCb6nwDKYXIfv4DD7StdyU3XQheadRZ7/C+qYLLO/IQ7oWeYymwmB0zScMMmqqYEfPVmGC+UVvgQNeFDc</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DAL-DW-PIMDB.SSISDevTest.PIDUser]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{DE8A3D99-3588-4FB9-B432-C27E17DC9034}"
+      DTS:ObjectName="DAL-DW-PIMDB.SSISDevTest.PIDUser">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=DAL-DW-PIMDB;User ID=PIDUser;Initial Catalog=SSISDevTest;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAJPJXPLyCH0u5N7L9zwl0jAAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAAX+TLnEpMOr7L6HKsWkAk+PvA3KnuNWob5Sh4TcDFS5wAAAAAOgAAAAAIAACAAAAB+5wgWKbh+3El65Uj26CUzx2IfWbqW1vYyHZRaTvwayhAAAAAHHeGXdQwbkFRJSNcfJRrtQAAAAH11Jj1C9+dUmDaR66aPDSTh02b05coH1UWC5m4SfNDxkl9YjxPdppkDYd311VB7ll5mbce3IOOm+KF7OAAqvTA</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{CAD07BAE-13AA-404B-B755-F679875E795E}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{D00D86DD-9E41-494E-B3AC-BCD06D5CD675}"
+          SQLTask:SqlStatementSource="-- mark table as updated&#xA;declare @date nvarchar(20)&#xA;set @date = convert(nvarchar, getdate(), 120)&#xA;EXEC sys.sp_updateextendedproperty @name=N'DateUpdated', @value = @date, @level0type=N'SCHEMA',@level0name=N'PIM', @level1type=N'TABLE',@level1name=N'PIM_ProductMerchCatKeys'" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load ProdMerchCatKeys Data to DW"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{6BBD098E-C2C1-40B7-9404-89E8B91034EE}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load ProdMerchCatKeys Data to DW"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[PIM].[PIM_ProductMerchCatKeys]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DAA30085VIR206B\INSTANCE2.PIDUser]"
+                  connectionManagerRefId="Package.ConnectionManagers[DAA30085VIR206B\INSTANCE2.PIDUser]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ProductID]"
+                      cachedDataType="i4"
+                      cachedName="ProductID"
+                      externalMetadataColumnId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductID]"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductID]" />
+                    <inputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[NPProductCode]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="NPProductCode"
+                      externalMetadataColumnId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NPProductCode]"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[NPProductCode]" />
+                    <inputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ProductMerchCatID]"
+                      cachedDataType="i4"
+                      cachedName="ProductMerchCatID"
+                      externalMetadataColumnId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductMerchCatID]"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductMerchCatID]" />
+                    <inputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[MerchCatID]"
+                      cachedDataType="i4"
+                      cachedName="MerchCatID"
+                      externalMetadataColumnId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MerchCatID]"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[MerchCatID]" />
+                    <inputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[MerchCatDesc]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="MerchCatDesc"
+                      externalMetadataColumnId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MerchCatDesc]"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[MerchCatDesc]" />
+                    <inputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[MerchCatKeyID]"
+                      cachedDataType="i4"
+                      cachedName="MerchCatKeyID"
+                      externalMetadataColumnId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MerchCatKeyID]"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[MerchCatKeyID]" />
+                    <inputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[MerchCatKeyDesc]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="MerchCatKeyDesc"
+                      externalMetadataColumnId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MerchCatKeyDesc]"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[MerchCatKeyDesc]" />
+                    <inputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ListIndicator]"
+                      cachedDataType="bool"
+                      cachedName="ListIndicator"
+                      externalMetadataColumnId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ListIndicator]"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ListIndicator]" />
+                    <inputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[MerchCatKeyListID]"
+                      cachedDataType="i4"
+                      cachedName="MerchCatKeyListID"
+                      externalMetadataColumnId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MerchCatKeyListID]"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[MerchCatKeyListID]" />
+                    <inputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[MerchCatKeyListDesc]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="MerchCatKeyListDesc"
+                      externalMetadataColumnId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MerchCatKeyListDesc]"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[MerchCatKeyListDesc]" />
+                    <inputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ProductMerchCatKeyDesc]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="ProductMerchCatKeyDesc"
+                      externalMetadataColumnId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductMerchCatKeyDesc]"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductMerchCatKeyDesc]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductMerchCatKeyID]"
+                      dataType="i4"
+                      name="ProductMerchCatKeyID" />
+                    <externalMetadataColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductID]"
+                      dataType="i4"
+                      name="ProductID" />
+                    <externalMetadataColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NPProductCode]"
+                      dataType="wstr"
+                      length="60"
+                      name="NPProductCode" />
+                    <externalMetadataColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductMerchCatID]"
+                      dataType="i4"
+                      name="ProductMerchCatID" />
+                    <externalMetadataColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MerchCatID]"
+                      dataType="i4"
+                      name="MerchCatID" />
+                    <externalMetadataColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MerchCatDesc]"
+                      dataType="wstr"
+                      length="100"
+                      name="MerchCatDesc" />
+                    <externalMetadataColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MerchCatKeyID]"
+                      dataType="i4"
+                      name="MerchCatKeyID" />
+                    <externalMetadataColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MerchCatKeyDesc]"
+                      dataType="wstr"
+                      length="100"
+                      name="MerchCatKeyDesc" />
+                    <externalMetadataColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ListIndicator]"
+                      dataType="bool"
+                      name="ListIndicator" />
+                    <externalMetadataColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MerchCatKeyListID]"
+                      dataType="i4"
+                      name="MerchCatKeyListID" />
+                    <externalMetadataColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MerchCatKeyListDesc]"
+                      dataType="wstr"
+                      length="100"
+                      name="MerchCatKeyListDesc" />
+                    <externalMetadataColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductMerchCatKeyDesc]"
+                      dataType="wstr"
+                      length="100"
+                      name="ProductMerchCatKeyDesc" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">set nocount on
+
+select	pmck.ID,
+		pmck.ProductID,
+		p.NPProductCode,
+		pmck.ProductMerchCatID,
+		pmck.MerchCatID,
+		mc.[Description] as MerchCatDesc,
+		pmck.MerchCatKeyID,
+		mck.[Description] as MerchCatKeyDesc,
+		mck.List as ListIndicator,
+		pmck.MerchCatKeyListID,
+		mckl.[Description] as MerchCatKeyListDesc,
+		pmck.[Description] as ProductMerchCatKeyDesc
+from dbo.ProductMerchCatKeys pmck (nolock)
+	join dbo.ProductMerchCategories pmc
+		on pmck.ProductMerchCatID = pmc.ID
+	join 
+		(
+			select	pc.ProductID
+			from ProductChannels pc
+				join Products p
+					on pc.ProductID = p.ID
+			where	(
+						pc.ItemStatusID in (3,5,6,7,8,12,13,14,15)
+					)
+			group by pc.ProductID
+		) pc
+	on pmck.ProductID = pc.ProductID
+	left join dbo.Products p (nolock)
+		on pmck.ProductID = p.ID
+	left join dbo.MerchandisingCategories mc (nolock)
+		on pmck.MerchCatID = mc.ID
+	left join dbo.MerchCatKeys mck (nolock)
+		on pmck.MerchCatKeyID = mck.ID
+	left join dbo.MerchCatKeyLists mckl (nolock)
+		on pmck.MerchCatKeyListID = mckl.ID
+order by pmck.ProductID,pmck.MerchCatID,pmck.MerchCatKeyID,pmck.MerchCatKeyListID</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DAL-DW-PIMDB.SSISDevTest.PIDUser]"
+                  connectionManagerRefId="Package.ConnectionManagers[DAL-DW-PIMDB.SSISDevTest.PIDUser]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ID]"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ID]"
+                      name="ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductID]"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductID]"
+                      name="ProductID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[NPProductCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[NPProductCode]"
+                      length="50"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[NPProductCode]"
+                      name="NPProductCode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductMerchCatID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductMerchCatID]"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductMerchCatID]"
+                      name="ProductMerchCatID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[MerchCatID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MerchCatID]"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[MerchCatID]"
+                      name="MerchCatID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[MerchCatDesc]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MerchCatDesc]"
+                      length="100"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[MerchCatDesc]"
+                      name="MerchCatDesc"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[MerchCatKeyID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MerchCatKeyID]"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[MerchCatKeyID]"
+                      name="MerchCatKeyID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[MerchCatKeyDesc]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MerchCatKeyDesc]"
+                      length="100"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[MerchCatKeyDesc]"
+                      name="MerchCatKeyDesc"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ListIndicator]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ListIndicator]"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ListIndicator]"
+                      name="ListIndicator"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[MerchCatKeyListID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MerchCatKeyListID]"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[MerchCatKeyListID]"
+                      name="MerchCatKeyListID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[MerchCatKeyListDesc]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MerchCatKeyListDesc]"
+                      length="100"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[MerchCatKeyListDesc]"
+                      name="MerchCatKeyListDesc"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductMerchCatKeyDesc]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductMerchCatKeyDesc]"
+                      length="100"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductMerchCatKeyDesc]"
+                      name="ProductMerchCatKeyDesc"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ID]"
+                      dataType="i4"
+                      name="ID" />
+                    <externalMetadataColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductID]"
+                      dataType="i4"
+                      name="ProductID" />
+                    <externalMetadataColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[NPProductCode]"
+                      dataType="wstr"
+                      length="50"
+                      name="NPProductCode" />
+                    <externalMetadataColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductMerchCatID]"
+                      dataType="i4"
+                      name="ProductMerchCatID" />
+                    <externalMetadataColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MerchCatID]"
+                      dataType="i4"
+                      name="MerchCatID" />
+                    <externalMetadataColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MerchCatDesc]"
+                      dataType="wstr"
+                      length="100"
+                      name="MerchCatDesc" />
+                    <externalMetadataColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MerchCatKeyID]"
+                      dataType="i4"
+                      name="MerchCatKeyID" />
+                    <externalMetadataColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MerchCatKeyDesc]"
+                      dataType="wstr"
+                      length="100"
+                      name="MerchCatKeyDesc" />
+                    <externalMetadataColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ListIndicator]"
+                      dataType="bool"
+                      name="ListIndicator" />
+                    <externalMetadataColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MerchCatKeyListID]"
+                      dataType="i4"
+                      name="MerchCatKeyListID" />
+                    <externalMetadataColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MerchCatKeyListDesc]"
+                      dataType="wstr"
+                      length="100"
+                      name="MerchCatKeyListDesc" />
+                    <externalMetadataColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductMerchCatKeyDesc]"
+                      dataType="wstr"
+                      length="100"
+                      name="ProductMerchCatKeyDesc" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ID]"
+                      dataType="i4"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ID]"
+                      name="ID" />
+                    <outputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductID]"
+                      dataType="i4"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductID]"
+                      name="ProductID" />
+                    <outputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[NPProductCode]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[NPProductCode]"
+                      name="NPProductCode" />
+                    <outputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductMerchCatID]"
+                      dataType="i4"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductMerchCatID]"
+                      name="ProductMerchCatID" />
+                    <outputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MerchCatID]"
+                      dataType="i4"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MerchCatID]"
+                      name="MerchCatID" />
+                    <outputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MerchCatDesc]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MerchCatDesc]"
+                      name="MerchCatDesc" />
+                    <outputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MerchCatKeyID]"
+                      dataType="i4"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MerchCatKeyID]"
+                      name="MerchCatKeyID" />
+                    <outputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MerchCatKeyDesc]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MerchCatKeyDesc]"
+                      name="MerchCatKeyDesc" />
+                    <outputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ListIndicator]"
+                      dataType="bool"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ListIndicator]"
+                      name="ListIndicator" />
+                    <outputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MerchCatKeyListID]"
+                      dataType="i4"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MerchCatKeyListID]"
+                      name="MerchCatKeyListID" />
+                    <outputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MerchCatKeyListDesc]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MerchCatKeyListDesc]"
+                      name="MerchCatKeyListDesc" />
+                    <outputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductMerchCatKeyDesc]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductMerchCatKeyDesc]"
+                      name="ProductMerchCatKeyDesc" />
+                    <outputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load ProdMerchCatKeys Data to DW.Paths[OLE DB Source Output]"
+              endId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate destination table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{8B23547A-5DFB-47AF-9767-AC8E4BEADC21}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate destination table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{D00D86DD-9E41-494E-B3AC-BCD06D5CD675}"
+          SQLTask:SqlStatementSource="Truncate Table PIM.PIM_ProductMerchCatKeys" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{8C4D1D7A-4011-46E2-B9A9-8408A27498E1}"
+      DTS:From="Package\Truncate destination table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Load ProdMerchCatKeys Data to DW" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{9065BF5F-7D93-4ABE-AAE7-7DA9EC820480}"
+      DTS:From="Package\Load ProdMerchCatKeys Data to DW"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Execute SQL Task" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="202.666666666667,42.6666666666667"
+          Id="Package\Truncate destination table"
+          TopLeft="466.874993043021,66.2999988144636" />
+        <NodeLayout
+          Size="250.666666666667,42.6666666666667"
+          Id="Package\Load ProdMerchCatKeys Data to DW"
+          TopLeft="444.999993368983,153.399997256994" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="569.270826539335,108.96666548113">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,44.4333317758639"
+              Start="0,0"
+              End="0,36.9333317758639">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36.9333317758639" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="164,42.6666666666667"
+          Id="Package\Execute SQL Task"
+          TopLeft="482.49999281019,234.649995804131" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="567.416659756253,196.066663923661">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,38.5833318804703"
+              Start="0,0"
+              End="0,31.0833318804703">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.0833318804703" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Load ProdMerchCatKeys Data to DW">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="150.666666666667,42.6666666666667"
+          Id="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source"
+          TopLeft="577.49999139458,45.4999991863966" />
+        <NodeLayout
+          Size="172,42.6666666666667"
+          Id="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination"
+          TopLeft="567.499991543591,139.099997512698" />
+        <EdgeLayout
+          Id="Package\Load ProdMerchCatKeys Data to DW.Paths[OLE DB Source Output]"
+          TopLeft="653.166658135752,88.1666658530633">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,50.9333316596349"
+              Start="0,0"
+              End="0,43.4333316596349">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,43.4333316596349" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load ProdMerchCatKeys Data to DW\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load ProdMerchCatKeys Data to DW\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
